@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <h2>model3</h2>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Capital</th>
+      <th>Pop.</th>
+    </tr>
+    <tr th:each="nation: ${list}">
+      <td th:text="${nation.name}"></td>
+      <td th:text="${nation.capital}"></td>
+      <td th:text="${nation.population}"></td>
+    </tr>
+  </table>
+</body>
+</html>
