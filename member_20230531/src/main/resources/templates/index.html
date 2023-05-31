@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<div th:replace="components/header :: header">
+
+</div>
 <h2>MEMBER PROJECT</h2>
 <h6>2023. 05. 31</h6>
 <a href="/member/save">회원가입</a>

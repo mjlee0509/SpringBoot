@@ -6,6 +6,9 @@ import com.example.member.repo.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -26,5 +29,15 @@ public class MemberService {
         }
 
 
+    }
+
+    public List<MemberDTO> findAll() {
+        List<MemberEntity> memberEntityList = memberRepository.findAll();
+        List<MemberDTO> memberDTOList = new ArrayList<>();
+        for(MemberEntity memberEntity : memberEntityList) {
+            MemberDTO memberDTO = MemberDTO.toDTO(memberEntity);
+            memberDTOList.add(memberDTO);
+        }
+        return memberDTOList;
     }
 }
