@@ -81,6 +81,12 @@ public class MemberController {
         return "redirect:/member/";
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteAxios(@PathVariable Long id) {
+        memberService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 
 
