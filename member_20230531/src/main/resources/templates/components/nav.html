@@ -3,11 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
 </head>
 <body>
 <div th:fragment="nav" id="nav">
-  <h1>nav</h1>
+    <ul>
+        <li>
+            <a href="/">
+                <i class="bi bi-house"></i>
+            </a>
+        </li>
+        <li>
+            <a href="/member/save">회원가입</a>
+        </li>
+        <li>
+            <a href="/member/login">로그인</a>
+        </li>
+        <li>
+            <a href="/member/">회원목록</a>
+        </li>
+        <li class="login-name" id="login-area">
+        </li>
+    </ul>
 </div>
 
 </body>
+<script th:inline="javascript">
+    const loginArea = document.getElementById("login-area");
+    const loginEmail = [[${session.loginEmail}]];
+
+    if (loginEmail.length != 0) {
+        loginArea.innerHTML = "<a href='/mypage' style='color: black;'>" + loginEmail + "님 환영해요!</a>";
+    } else {
+        loginArea.innerHTML = "<a href='/login'>login</a>";
+    }
+
+</script>
 </html>

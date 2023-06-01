@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>메인</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 <body>
-<h2>메인화면</h2>
-<span th:text="${session.loginEmail}"></span><span>님 환영합니다</span>
-<a href="/member/">회원목록</a>
-
-
+<div th:replace="components/header :: header"></div>
+<div th:replace="components/nav :: nav"></div>
+<div id="section">
+    <h2>메인화면</h2>
+    <button onclick="update()">회원정보수정</button>
+</div>
+<div th:replace="components/footer :: footer"></div>
 </body>
 </html>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -35,9 +36,22 @@ public class MemberService {
         List<MemberEntity> memberEntityList = memberRepository.findAll();
         List<MemberDTO> memberDTOList = new ArrayList<>();
         for(MemberEntity memberEntity : memberEntityList) {
-            MemberDTO memberDTO = MemberDTO.toDTO(memberEntity);
-            memberDTOList.add(memberDTO);
+            memberDTOList.add(MemberDTO.toDTO(memberEntity));
         }
         return memberDTOList;
+    }
+
+    public MemberDTO findById(Long id) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
+        if (optionalMemberEntity.isPresent()) {
+            MemberEntity memberEntity = optionalMemberEntity.get(); // optional 껍데기 벗기기
+            return MemberDTO.toDTO(optionalMemberEntity.get());  // Entity를 DTO로 변환
+        } else {
+            return null;
+        }
+    }
+
+    public void delete(Long id) {
+        memberRepository.deleteById(id);
     }
 }
