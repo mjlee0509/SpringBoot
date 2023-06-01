@@ -6,6 +6,7 @@ import com.example.member.repo.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -29,9 +30,14 @@ public class MemberService {
         } else {
             return true;
         }
-
-
     }
+
+    public void loginAxios(MemberDTO memberDTO) {
+        memberRepository.findByMemberEmailAndMemberPassword
+                        (memberDTO.getMemberEmail(), memberDTO.getMemberPassword())
+                .orElseThrow(() -> new NoSuchElementException("이메일 또는 비밀번호가 일치하지 않습니다"));
+    }
+
 
     public List<MemberDTO> findAll() {
         List<MemberEntity> memberEntityList = memberRepository.findAll();
@@ -42,24 +48,23 @@ public class MemberService {
         return memberDTOList;
     }
 
+//    public MemberDTO findById(Long id) {
+//        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
+//        if (optionalMemberEntity.isPresent()) {
+//            MemberEntity memberEntity = optionalMemberEntity.get(); // optional 껍데기 벗기기
+//            return MemberDTO.toDTO(optionalMemberEntity.get());  // Entity를 DTO로 변환
+//        } else {
+//            return null;
+//        }
+//    }
+
     public MemberDTO findById(Long id) {
-        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
-        if (optionalMemberEntity.isPresent()) {
-            MemberEntity memberEntity = optionalMemberEntity.get(); // optional 껍데기 벗기기
-            return MemberDTO.toDTO(optionalMemberEntity.get());  // Entity를 DTO로 변환
-        } else {
-            return null;
-        }
+        MemberEntity memberEntity = memberRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+        return MemberDTO.toDTO(memberEntity);
     }
 
     public void delete(Long id) {
         memberRepository.deleteById(id);
     }
 
-    public void loginAxios(MemberDTO memberDTO) {
-        memberRepository.findByMemberEmailAndMemberPassword
-                (memberDTO.getMemberEmail(), memberDTO.getMemberPassword())
-                .orElseThrow(() -> new NoSuchElementException("이메일 또는 비밀번호가 일치하지 않습니다"));
-
-    }
 }

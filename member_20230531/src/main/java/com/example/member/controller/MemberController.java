@@ -47,6 +47,13 @@ public class MemberController {
             return "memberLogin";
         }
     }
+    @PostMapping("/login/axios")
+    public ResponseEntity memberLogin(@RequestBody MemberDTO memberDTO, HttpSession session) throws Exception {
+        memberService.loginAxios(memberDTO);
+        session.setAttribute("loginEmail", memberDTO.getMemberEmail());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
     @GetMapping("/")
     public String findAll(Model model) {
@@ -55,11 +62,17 @@ public class MemberController {
         return "memberPages/memberList";
     }
 
-    @GetMapping("/detail/{id}")
-    public String findById(@PathVariable Long id, Model model) {
+//    @GetMapping("/detail/{id}")
+//    public String findById(@PathVariable Long id, Model model) {
+//        MemberDTO memberDTO = memberService.findById(id);
+//        model.addAttribute("member", memberDTO);
+//        return "memberPages/memberDetail";
+//    }
+
+    @GetMapping("/axios/{id}")
+    public ResponseEntity detailAxios(@PathVariable Long id) throws Exception {
         MemberDTO memberDTO = memberService.findById(id);
-        model.addAttribute("member", memberDTO);
-        return "memberPages/memberDetail";
+        return new ResponseEntity<>(memberDTO, HttpStatus.OK);
     }
 
     @GetMapping("/delete/{id}")
@@ -68,12 +81,6 @@ public class MemberController {
         return "redirect:/member/";
     }
 
-    @PostMapping("/login/axios")
-    public ResponseEntity memberLogin(@RequestBody MemberDTO memberDTO, HttpSession session) throws Exception {
-        memberService.loginAxios(memberDTO);
-        session.setAttribute("loginEmail", memberDTO.getMemberEmail());
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 
 
 

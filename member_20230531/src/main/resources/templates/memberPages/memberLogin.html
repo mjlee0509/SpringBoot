@@ -26,8 +26,11 @@
             }
         }).then(res => {
             console.log("res", res);
+            location.href = "/member/";
         }).catch(err => {
             console.log("err", err);
+            alert("아이디 또는 비밀번호를 찾을 수 없습니다");
+            location.href = "/member/login";
         });
 
     }
