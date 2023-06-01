@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -22,7 +23,7 @@ public class MemberService {
     }
 
     public boolean login(MemberDTO memberDTO) {
-        MemberEntity findMember = memberRepository.findByMemberEmailAndMemberPassword(memberDTO.getMemberEmail(), memberDTO.getMemberPassword());
+        Optional<MemberEntity> findMember = memberRepository.findByMemberEmailAndMemberPassword(memberDTO.getMemberEmail(), memberDTO.getMemberPassword());
         if(findMember == null) {
             return false;
         } else {
@@ -53,5 +54,12 @@ public class MemberService {
 
     public void delete(Long id) {
         memberRepository.deleteById(id);
+    }
+
+    public void loginAxios(MemberDTO memberDTO) {
+        memberRepository.findByMemberEmailAndMemberPassword
+                (memberDTO.getMemberEmail(), memberDTO.getMemberPassword())
+                .orElseThrow(() -> new NoSuchElementException("이메일 또는 비밀번호가 일치하지 않습니다"));
+
     }
 }

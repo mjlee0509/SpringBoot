@@ -4,11 +4,14 @@ import com.example.member.dto.MemberDTO;
 import com.example.member.entity.MemberEntity;
 import com.example.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +66,13 @@ public class MemberController {
     public String delete(@PathVariable Long id) {
         memberService.delete(id);
         return "redirect:/member/";
+    }
+
+    @PostMapping("/login/axios")
+    public ResponseEntity memberLogin(@RequestBody MemberDTO memberDTO, HttpSession session) throws Exception {
+        memberService.loginAxios(memberDTO);
+        session.setAttribute("loginEmail", memberDTO.getMemberEmail());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 

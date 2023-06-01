@@ -3,13 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>로그인</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
 <h2>로그인</h2>
 <form action="/member/login" method="post">
     <input type="text" name="memberEmail" placeholder="이메일을 입력하세요"><br>
     <input type="password" name="memberPassword" placeholder="비밀번호를 입력하세요"><br>
-    <input type="submit" value="로그인">
+    <input type="button" onclick="login()" value="로그인">
 </form>
 </body>
+<script>
+    const login = () => {
+        const email = document.querySelector('input[name="memberEmail"]').value;
+        const password = document.querySelector('input[name="memberPassword"]').value;
+        axios({
+            method: "post",
+            url: "/member/login/axios",
+            data: {
+                memberEmail: email,
+                memberPassword: password
+            }
+        }).then(res => {
+            console.log("res", res);
+        }).catch(err => {
+            console.log("err", err);
+        });
+
+    }
+</script>
 </html>

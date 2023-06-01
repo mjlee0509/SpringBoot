@@ -13,7 +13,7 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
     // select에 해당되는 메서드들은 반드시 findBy~~ 여야 한다
 
     // 내가 한거
-    MemberEntity findByMemberEmailAndMemberPassword(String memberEmail, String memberPassword);
+    Optional<MemberEntity> findByMemberEmailAndMemberPassword(String memberEmail, String memberPassword);
 
     // 교수님이 하신거
     // 내가 Optional을 놓쳤구나...
