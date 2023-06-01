@@ -11,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.NoSuchElementException;
+
 @SpringBootTest
 public class MemberTest {
     @Autowired
@@ -64,5 +66,21 @@ public class MemberTest {
         Long savedId = memberService.save(memberDTO);
         MemberDTO dto = memberService.findById(savedId);
         assertThat(memberDTO.getMemberEmail().equals(dto.getMemberEmail()));
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    @DisplayName("#2. 로그인 테스트")
+    public void loginTest() {
+        // #2-1. 테스트용 데이터 생성
+        MemberDTO memberDTO = newMembers(999);
+        // #2-2. 이메일 또는 비밀번호를 틀렸을 때 Exception 상황 설정
+        MemberDTO loginDTO = new MemberDTO();
+        loginDTO.setMemberEmail("wrong email");
+        loginDTO.setMemberPassword("1234");
+        // #2-3. 해당 Exception이 발생하면 테스트 성공
+        assertThatThrownBy(() -> memberService.loginAxios(loginDTO))
+                .isInstanceOf(NoSuchElementException.class);
     }
 }
