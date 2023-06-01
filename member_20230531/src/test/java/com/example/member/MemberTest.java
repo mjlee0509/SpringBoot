@@ -83,4 +83,17 @@ public class MemberTest {
         assertThatThrownBy(() -> memberService.loginAxios(loginDTO))
                 .isInstanceOf(NoSuchElementException.class);
     }
+
+    @Test
+    @DisplayName("#3. 삭제 테스트")
+    public void deleteTest() {
+        // #3-1. 테스트 데이터 생성
+        MemberDTO memberDTO = newMembers(999);
+        Long savedId = memberService.save(memberDTO);
+        // #3-2. 삭제 실시
+        memberService.delete(savedId);
+        // #3-3. 삭제 후 이 회원을 검색했을 때, NoSuchElementException이 터지면 테스트 성공
+        assertThatThrownBy(() -> memberService.findById(savedId))
+                .isInstanceOf(NoSuchElementException.class);
+    }
 }
