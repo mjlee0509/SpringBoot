@@ -13,8 +13,14 @@
         <span id="good" style="color: #0081ff; display: none">
             사용 가능한 이메일입니다.
         </span>
-        <span id="wrong" style="color: mediumvioletred; display: none">
+        <span id="used" style="color: mediumvioletred; display: none">
             이미 사용중인 이메일입니다.
+        </span>
+        <span id="blank" style="color: mediumvioletred; display: none">
+            사용하실 이메일을 입력해주세요.
+        </span>
+        <span id="wrong" style="color: mediumvioletred; display: none">
+            영문, 숫자를 포함하여 5~20자 이내로 입력해주세요.
         </span>
     </p>
     <input type="text" name="memberPassword" placeholder="비밀번호"><br>
@@ -28,9 +34,23 @@
     const email_check = () => {
         // 체크시 메세지가 2개 띄워지는 것을 방지하기 위한 사전처리
         document.querySelector("#good").style.display = "none";
+        document.querySelector("#used").style.display = "none";
+        document.querySelector("#blank").style.display = "none";
         document.querySelector("#wrong").style.display = "none";
 
         const email = document.querySelector("#member-email").value;
+        const emailForm = /^[a-zA-Z0-9\d-_.]{5,20}$/;
+
+        if (email.length === 0) {
+            document.querySelector("#blank").style.display = "block";
+            return;
+        }
+
+        if (!email.match(emailForm)) {
+            document.querySelector("#wrong").style.display = "block";
+            return;
+        }
+
         axios({
             method: "post",
             url: "/member/dup-check",
@@ -38,12 +58,15 @@
                 memberEmail: email
             }
         }).then(res => {
-             console.log("then");
-             document.querySelector("#good").style.display = "block";
+            console.log("then");
+            document.querySelector("#good").style.display = "block";
+            const form = document.querySelector("form");
+            form.submit();
         }).catch(err => {
             console.log("catch");
-            document.querySelector("#wrong").style.display = "block";
+            document.querySelector("#used").style.display = "block";
         })
     }
+
 </script>
 </html>

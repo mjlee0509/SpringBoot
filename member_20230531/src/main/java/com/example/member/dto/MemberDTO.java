@@ -2,6 +2,7 @@ package com.example.member.dto;
 
 import com.example.member.entity.MemberEntity;
 import lombok.Data;
+import org.springframework.validation.annotation.Validated;
 
 @Data
 public class MemberDTO {
