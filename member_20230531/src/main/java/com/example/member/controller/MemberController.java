@@ -121,6 +121,19 @@ public class MemberController {
         return "memberPages/memberDetail";
     }
 
+    @PostMapping("/dup-check")
+    public ResponseEntity emailCheck(@RequestBody MemberDTO memberDTO) {
+        // 이 메서드를 쓸 경우, 중복됐을 때 OK 처리가 이루어진다.
+        // JS에서 then/catch만 안 헷갈리면 이 메서드를 써도 무방하다
+        // memberService.findByMemberEmail(memberDTO.getMemberEmail());
+        boolean result = memberService.emailCheck(memberDTO.getMemberEmail());
+        if (result) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+    }
+
 
 
 
