@@ -75,7 +75,17 @@ input {
 }
 
 table {
+    margin-top: 30px;
     border-collapse: collapse;
     border: 1px solid #d7d7d7;
+    width: 65%;
+}
 
+#detail-area {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+#detail-table {
+    width: 65%;
 }

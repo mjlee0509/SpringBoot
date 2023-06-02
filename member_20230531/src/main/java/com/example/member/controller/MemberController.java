@@ -22,6 +22,10 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    @GetMapping("/main")
+    public String index() {
+        return "memberPages/memberMain";
+    }
     @GetMapping("/save")
     public String saveForm() {
         return "memberPages/memberSave";
@@ -86,6 +90,37 @@ public class MemberController {
         memberService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/update")
+    public String updateForm(HttpSession session, Model model) {
+        String loginEmail = (String)  session.getAttribute("loginEmail"); // String으로 형변환하여 session값 받기
+        MemberDTO memberDTO = memberService.findByMemberEmail(loginEmail);
+        model.addAttribute("member", memberDTO);
+        return "memberPages/memberUpdate";
+//        MemberDTO memberDTO = memberService.findById(id);
+//        model.addAttribute("member", memberDTO);
+//        return "memberPages/memberUpdate";
+    }
+
+//    @PostMapping("/update")
+//    public String update(@ModelAttribute MemberDTO memberDTO) {
+//        memberService.update(memberDTO);
+//        return "redirect:/member/";
+//    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity update(@RequestBody MemberDTO memberDTO) {
+        memberService.update(memberDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public String detail(@PathVariable Long id, Model model) {
+        MemberDTO memberDTO = memberService.findById(id);
+        model.addAttribute("member", memberDTO);
+        return "memberPages/memberDetail";
+    }
+
 
 
 

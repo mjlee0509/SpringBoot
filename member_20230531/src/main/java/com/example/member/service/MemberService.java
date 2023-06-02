@@ -67,5 +67,16 @@ public class MemberService {
     public void delete(Long id) {
         memberRepository.deleteById(id);
     }
+    public MemberDTO findByMemberEmail(String loginEmail) {
+        // 1. 회원정보를 조회 -> 회원정보가 없으면 예외 처리; 있으면 MemberEntity 리턴 후 2.로 이동
+        MemberEntity memberEntity = memberRepository.findByMemberEmail(loginEmail).orElseThrow(() -> new NoSuchElementException());
+        // 2. 있는 경우 DTO로 변환하여 Controller로 리턴
+        return MemberDTO.toDTO(memberEntity);
+    }
+
+    public void update(MemberDTO memberDTO) {
+        MemberEntity memberEntity = MemberEntity.toUpdateEntity(memberDTO);
+        memberRepository.save(memberEntity);
+    }
 
 }

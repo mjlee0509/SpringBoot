@@ -10,6 +10,9 @@
 <form action="/member/login" method="post">
     <input type="text" name="memberEmail" placeholder="이메일을 입력하세요"><br>
     <input type="password" name="memberPassword" placeholder="비밀번호를 입력하세요"><br>
+    <p id="login-result" style="color: red; display: none">
+        이메일 또는 비밀번호가 일치하지 않습니다
+    </p>
     <input type="button" onclick="login()" value="로그인">
 </form>
 </body>
@@ -26,11 +29,12 @@
             }
         }).then(res => {
             console.log("res", res);
-            location.href = "/member/";
+            location.href = "/member/main";
         }).catch(err => {
             console.log("err", err);
             alert("아이디 또는 비밀번호를 찾을 수 없습니다");
             location.href = "/member/login";
+            document.getElementById("login-result").style.display="block";
         });
 
     }

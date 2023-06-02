@@ -20,6 +20,7 @@
             <th>Mobile</th>
             <th>조회</th>
             <th>삭제</th>
+            <th>수정</th>
         </tr>
         <tr th:each="member: ${memberList}">
             <td th:text="${member.id}" id="member-id"></td>
@@ -92,6 +93,8 @@
             alert("삭제 실패");
         });
     }
+
+
 
 </script>
 </html>
