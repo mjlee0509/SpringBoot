@@ -1,10 +1,7 @@
 package com.example.board.dto;
 
 import com.example.board.entity.BoardEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
