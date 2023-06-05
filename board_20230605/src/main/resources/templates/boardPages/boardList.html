@@ -20,9 +20,9 @@
         </tr>
         <tr th:each="b: ${boardList}">
             <td th:text="${b.id}"></td>
-            <td th:text="${b.boardTitle}"></td>
+            <td><a th:href="@{|/board/${b.id}|}" th:text="${b.boardTitle}"></a></td>
             <td th:text="${b.boardWriter}"></td>
-            <td> null </td>
+            <td th:text="${b.createdAt}"></td>
             <td th:text="${b.boardHits}"></td>
         </tr>
     </table>
@@ -30,8 +30,8 @@
 <div th:replace="components/footer :: footer"></div>
 </body>
 <script>
-    // const board_detail = () => {
-    //     location.href = "";
-    // }
+    const board_detail = (id) => {
+        location.href = "/board/detail/"+id;
+    }
 </script>
 </html>

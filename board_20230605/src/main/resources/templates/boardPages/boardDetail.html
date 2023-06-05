@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>글보기</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+<div th:replace="components/header :: header"></div>
+<div th:replace="components/nav :: nav"></div>
+<div id="section" class="details">
+    <div id="id-box" th:text="${board.id}"></div>
+    <div id="title-box" th:text="${board.boardTitle}"></div>
+    <div id="writer-box" th:text="${board.boardWriter}"></div>
+    <div id="date-hits">
+        <div id="date-box"></div>
+        <div id="hits-box" th:text="${board.boardHits}"></div>
+    </div>
+    <div id="contents-box" th:text="${board.boardContents}"></div>
+</div>
+</div>
+<div th:replace="components/footer :: footer"></div>
+
+</body>
+</html>
