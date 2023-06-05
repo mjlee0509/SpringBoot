@@ -27,19 +27,19 @@
     <input type="text" name="memberName" placeholder="이름"><br>
     <input type="date" name="memberBirth" placeholder="생년월일"><br>
     <input type="text" name="memberMobile" placeholder="전화번호(010-0000-0000)"><br>
-    <input type="submit" value="회원가입">
+    <input type="submit" value="회원가입" onclick="is_valid()">
 </form>
 </body>
 <script>
+    const form = document.querySelector("form");
+    const email = document.querySelector("#member-email").value;
+    const emailForm = /^[a-zA-Z0-9\d-_.]{5,20}$/;
     const email_check = () => {
         // 체크시 메세지가 2개 띄워지는 것을 방지하기 위한 사전처리
         document.querySelector("#good").style.display = "none";
         document.querySelector("#used").style.display = "none";
         document.querySelector("#blank").style.display = "none";
         document.querySelector("#wrong").style.display = "none";
-
-        const email = document.querySelector("#member-email").value;
-        const emailForm = /^[a-zA-Z0-9\d-_.]{5,20}$/;
 
         if (email.length === 0) {
             document.querySelector("#blank").style.display = "block";
@@ -67,6 +67,19 @@
             document.querySelector("#used").style.display = "block";
         })
     }
+
+    function is_valid() {
+        if (email.length === 0) {
+            document.querySelector("#blank").style.display = "block";
+            return;
+        }
+
+    }
+
+
+
+
+
 
 </script>
 </html>
