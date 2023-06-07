@@ -102,7 +102,6 @@
         const inputPass = document.querySelector('input[name="boardPass"]').value;
 
         if (dbPass == inputPass) {
-            location.href = "/board/delete/"+id;
             axios ({
                 method: "delete",
                 url: "/board/"+id
