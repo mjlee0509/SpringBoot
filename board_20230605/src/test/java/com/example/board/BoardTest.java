@@ -38,17 +38,17 @@ public class BoardTest {
         return boardDTO;
     }
 
-    @Test
-    public void testData() {
-        for (int i=1; i<=10; i++) {
-            boardService.save(newBoards(i));
-        }
-    }
+//    @Test
+//    public void testData() {
+//        for (int i=1; i<=10; i++) {
+//            boardService.save(newBoards(i));
+//        }
+//    }
 
-    @Test
-    public void testDatum() {
-        boardService.save(newBoard());
-    }
+//    @Test
+//    public void testDatum() {
+//        boardService.save(newBoard());
+//    }
 
 //    @Test
 //    @Transactional

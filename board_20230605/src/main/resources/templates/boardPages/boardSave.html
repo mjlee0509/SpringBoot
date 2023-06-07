@@ -10,11 +10,12 @@
 <div th:replace="components/header :: header"></div>
 <div th:replace="components/nav :: nav"></div>
 <div id="section">
-    <form action="/board/save" method="post" id="save-form">
+    <form action="/board/save" method="post" id="save-form" enctype="multipart/form-data">
         <input type="text" name="boardTitle" id="board-title" placeholder="제목"><br>
         <input type="text" name="boardWriter" id="board-writer" placeholder="작성자"><br>
         <input type="text" name="boardPass" id="board-pass" placeholder="비밀번호"><br>
         <textarea name="boardContents" id="board-contents" cols="22.5" rows="30"></textarea><br>
+        <input type="file" name="boardFile" class="form-control">
         <button type="submit"> 글쓰기 </button>
     </form>
 </div>
