@@ -23,7 +23,7 @@
             <td th:text="${b.id}"></td>
             <td><a th:href="@{|/board/${b.id}|}" th:text="${b.boardTitle}"></a></td>
             <td th:text="${b.boardWriter}"></td>
-            <td th:text="${b.createdAt}"></td>
+            <td th:text="*{#temporals.format(b.createdAt, 'yyyy년 MM월 dd일 HH:mm')}"></td>
             <td th:text="${b.boardHits}"></td>
         </tr>
     </table>

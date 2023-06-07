@@ -27,7 +27,7 @@
         </tr>
         <tr>
             <th>작성일시</th>
-            <td th:text="${board.createdAt}"></td>
+            <td th:text="*{#temporals.format(board.createdAt, 'yyyy년 MM월 dd일 HH:mm')}"></td>
         </tr>
     </table>
 
@@ -39,11 +39,17 @@
             <td th:text="${board.boardContents}"></td>
         </tr>
         <tr th:if="${board.fileAttached == 1}">
-            <th>images</th>
-            <td>
-                <img th:src="@{|/upload/${board.storedFileName}}" width="200" height="200" alt="">
-            </td>
+            <th>Images</th>
         </tr>
+        <td th:each="fileName: ${board.storedFileName}">
+            <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="">
+        </td>
+<!--        <tr th:if="${board.fileAttached == 1}">-->
+<!--            <th>images</th>-->
+<!--            <td th:each="fileName: ${board.storedFileName}">-->
+<!--                <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="">-->
+<!--            </td>-->
+<!--        </tr>-->
     </table>
 
     <div class="buttons">
