@@ -29,12 +29,25 @@ public class BoardTest {
         boardDTO.setBoardContents("테스트게시물 "+i+" 입니다 껄껄");
         return boardDTO;
     }
+    private BoardDTO newBoard() {
+        BoardDTO boardDTO = new BoardDTO();
+        boardDTO.setBoardTitle("테스트게시물");
+        boardDTO.setBoardWriter("테스트돌이");
+        boardDTO.setBoardPass("test");
+        boardDTO.setBoardContents("그저 테스트게시물 입니다 껄껄");
+        return boardDTO;
+    }
 
     @Test
     public void testData() {
         for (int i=1; i<=10; i++) {
             boardService.save(newBoards(i));
         }
+    }
+
+    @Test
+    public void testDatum() {
+        boardService.save(newBoard());
     }
 
 //    @Test

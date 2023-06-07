@@ -48,8 +48,8 @@
 
     <div id="pass-box" style="display: none">
         <input type="text" name="boardPass" id="board-pass" placeholder="정보확인을 위해 비밀번호를 입력하세요">
-        <input type="button" value="수정" th:onclick="req_update([[${board.id}]])" id="update-btn" style="display: none">
-        <input type="button" value="삭제" th:onclick="req_delete([[${board.id}]])" id="del-btn" style="display: none">
+        <input type="button" value="수정" onclick="req_update()" id="update-btn" style="display: none">
+        <input type="button" value="삭제" onclick="req_delete()" id="del-btn" style="display: none">
     </div>
 </div>
 <div th:replace="components/footer :: footer"></div>
@@ -65,7 +65,8 @@
         document.querySelector("#update-btn").style.display = "block";
     }
 
-    const req_update = (id) => {
+    const req_update = () => {
+        const id = [[${board.id}]];
         const dbPass = '[[${board.boardPass}]]';
         const inputPass = document.querySelector('input[name="boardPass"]').value;
 
@@ -83,7 +84,7 @@
         document.querySelector("#del-btn").style.display = "block";
     }
 
-    const req_delete = (id) => {
+    const req_delete = () => {
         const dbPass = '[[${board.boardPass}]]';
         const inputPass = document.querySelector('input[name="boardPass"]').value;
 
@@ -102,6 +103,5 @@
         }
 
     }
-
 </script>
 </html>
