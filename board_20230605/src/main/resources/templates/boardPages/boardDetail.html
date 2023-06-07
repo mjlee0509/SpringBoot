@@ -38,6 +38,12 @@
         <tr>
             <td th:text="${board.boardContents}"></td>
         </tr>
+        <tr th:if="${board.fileAttached == 1}">
+            <th>images</th>
+            <td>
+                <img th:src="@{|/upload/${board.storedFileName}}" width="200" height="200" alt="">
+            </td>
+        </tr>
     </table>
 
     <div class="buttons">

@@ -77,7 +77,5 @@ public class BoardEntity {
         boardEntity.setBoardHits(0);
         boardEntity.setFileAttached(1); // <-- toSaveEntity에서 여기만 바꿔주면 된다
         return boardEntity;
-
-
     }
 }
