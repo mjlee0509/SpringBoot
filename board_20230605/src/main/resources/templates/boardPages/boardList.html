@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <title>게시만 둘러보기</title>
     <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/table.css}">
 </head>
 <body>
 <div th:replace="components/header :: header"></div>
 <div th:replace="components/nav :: nav"></div>
 <div id="section">
   <h2>게시판 둘러보기</h2>
-    <table>
+    <table id="list-table">
         <tr>
             <th>글번호</th>
             <th>제목</th>
@@ -18,7 +19,7 @@
             <th>작성시간</th>
             <th>조회수</th>
         </tr>
-        <tr th:each="b: ${boardList}">
+        <tr th:each="b: ${boardList}" id="list-table-rows">
             <td th:text="${b.id}"></td>
             <td><a th:href="@{|/board/${b.id}|}" th:text="${b.boardTitle}"></a></td>
             <td th:text="${b.boardWriter}"></td>

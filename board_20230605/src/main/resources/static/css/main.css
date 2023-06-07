@@ -2,6 +2,7 @@
     box-sizing: border-box;
     margin: 0;
     text-decoration: none;
+    border-collapse: collapse;
 }
 
 #header {
@@ -39,12 +40,14 @@
 }
 
 #nav ul li a:hover {
-    border-bottom: 3px solid crimson;
+    color: #7300ff;
+    font-weight: bold;
+    border-bottom: 2px solid #7300ff;
 }
 
-#nav ul li a:focus {
-    border-bottom: 3px solid crimson;
-}
+/*#nav ul li a:focus {*/
+/*    border-bottom: 3px solid crimson;*/
+/*}*/
 
 #section {
     background-color: white;

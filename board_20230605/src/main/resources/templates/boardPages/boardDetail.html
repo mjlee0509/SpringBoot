@@ -4,22 +4,104 @@
     <meta charset="UTF-8">
     <title>글보기</title>
     <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/table.css}">
+    <link rel="stylesheet" th:href="@{/css/form.css}">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
 <div th:replace="components/header :: header"></div>
 <div th:replace="components/nav :: nav"></div>
 <div id="section" class="details">
-    <div id="id-box" th:text="${board.id}"></div>
-    <div id="title-box" th:text="${board.boardTitle}"></div>
-    <div id="writer-box" th:text="${board.boardWriter}"></div>
-    <div id="date-hits">
-        <div id="date-box"></div>
-        <div id="hits-box" th:text="${board.boardHits}"></div>
+    <table id="info-table">
+        <tr>
+            <th>ID</th>
+            <td th:text="${board.id}"></td>
+        </tr>
+        <tr>
+            <th>작성자</th>
+            <td th:text="${board.boardWriter}"></td>
+        </tr>
+        <tr>
+            <th>조회수</th>
+            <td th:text="${board.boardHits}"></td>
+        </tr>
+        <tr>
+            <th>작성일시</th>
+            <td th:text="${board.createdAt}"></td>
+        </tr>
+    </table>
+
+    <table id="contents-table">
+        <tr>
+            <th>내용</th>
+        </tr>
+        <tr>
+            <td th:text="${board.boardContents}"></td>
+        </tr>
+    </table>
+
+    <div class="buttons">
+        <input type="button" value="목록" onclick="list_req()" id="list-btn" style="display: none">
+        <input type="button" value="수정" class="btn btn-dark" onclick="board_update()">
+        <input type="button" value="삭제" class="btn btn-danger" onclick="board_delete()">
     </div>
-    <div id="contents-box" th:text="${board.boardContents}"></div>
-</div>
+
+    <div id="pass-box" style="display: none">
+        <input type="text" name="boardPass" id="board-pass" placeholder="정보확인을 위해 비밀번호를 입력하세요">
+        <input type="button" value="수정" th:onclick="req_update([[${board.id}]])" id="update-btn" style="display: none">
+        <input type="button" value="삭제" th:onclick="req_delete([[${board.id}]])" id="del-btn" style="display: none">
+    </div>
 </div>
 <div th:replace="components/footer :: footer"></div>
 
 </body>
+<script>
+
+    const list_req = () => {
+        location.href = "/board/";
+    }
+    const board_update = () => {
+        document.querySelector("#pass-box").style.display = "block";
+        document.querySelector("#update-btn").style.display = "block";
+    }
+
+    const req_update = (id) => {
+        const dbPass = '[[${board.boardPass}]]';
+        const inputPass = document.querySelector('input[name="boardPass"]').value;
+
+        if (dbPass == inputPass) {
+            console.log(dbPass + ";" + inputPass + "/ success: dbPass == inputPass");
+            location.href = "/board/update/"+id;
+        } else {
+            console.log(dbPass + ";" + inputPass + "/ error: dbPass != inputPass");
+            alert("비밀번호가 일치하지 않습니다.");
+        }
+    }
+
+    const board_delete = () => {
+        document.querySelector("#pass-box").style.display = "block";
+        document.querySelector("#del-btn").style.display = "block";
+    }
+
+    const req_delete = (id) => {
+        const dbPass = '[[${board.boardPass}]]';
+        const inputPass = document.querySelector('input[name="boardPass"]').value;
+
+        if (dbPass == inputPass) {
+            location.href = "/board/delete/"+id;
+            axios ({
+                method: "delete",
+                url: "/board/"+id
+            }).then(res => {
+                location.href = "/board/";
+            }).catch(err => {
+                alert("삭제 실패");
+            })
+        } else {
+            alert("비밀번호가 일치하지 않습니다.")
+        }
+
+    }
+
+</script>
 </html>

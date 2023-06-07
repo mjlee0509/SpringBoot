@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <title>글쓰기</title>
     <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/form.css}">
 </head>
 <body>
 <div th:replace="components/header :: header"></div>
 <div th:replace="components/nav :: nav"></div>
 <div id="section">
-    <form action="/board/save" method="post">
+    <form action="/board/save" method="post" id="save-form">
         <input type="text" name="boardTitle" id="board-title" placeholder="제목"><br>
         <input type="text" name="boardWriter" id="board-writer" placeholder="작성자"><br>
         <input type="text" name="boardPass" id="board-pass" placeholder="비밀번호"><br>

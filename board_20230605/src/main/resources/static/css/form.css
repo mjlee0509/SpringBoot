@@ -1,0 +1,35 @@
+#save-form {
+    margin: auto;
+    width: 50%;
+}
+
+#save-form input[type=text] {
+    width: 75%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 3px solid black;
+}
+
+#save-form input[type=text]:focus {
+    background-color: #f4eeff;
+    outline: none;
+    border-bottom: 3px solid #7300ff;
+    font-weight: bold;
+
+}
+
+#save-form textarea {
+    width: 75%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding: 10px;
+    border: none;
+}
+
+#save-form textarea:focus {
+    outline: none;
+    box-shadow: 5px 5px 5px #d5b2ff;
+}
