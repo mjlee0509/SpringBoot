@@ -26,7 +26,7 @@ public class BoardService {
 //        BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDTO);
 //        boardRepository.save(boardEntity);
 //        return boardRepository.save(boardEntity).getId();
-        if(boardDTO.getBoardFile().get(0).isEmpty()) {
+        if(boardDTO.getBoardFile().get(0).isEmpty() || boardDTO.getBoardFile().get(0).isEmpty()) {
             // 파일이 없는 경우
             // 기존의 save 메서드를 그대로 유지하되, Entity에 가서 fileAttached 값을 설정해주자
             BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDTO);
