@@ -1,6 +1,7 @@
 package com.example.board;
 
 import com.example.board.dto.BoardDTO;
+import com.example.board.dto.CommentDTO;
 import com.example.board.entity.BoardEntity;
 import com.example.board.repo.BoardRepository;
 import com.example.board.service.BoardService;
@@ -70,4 +71,5 @@ public class BoardTest {
         // 부모 Entity에서 자식 Entity를 조회하는 경우 @Transactional 필요
         System.out.println("첨부파일 이름 = " + boardEntity.getBoardFileEntityList().get(0).getStoredFileName());
     }
+
 }

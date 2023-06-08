@@ -6,6 +6,8 @@
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <link rel="stylesheet" th:href="@{/css/table.css}">
     <link rel="stylesheet" th:href="@{/css/form.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
@@ -44,24 +46,50 @@
         <td th:each="fileName: ${board.storedFileName}">
             <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="">
         </td>
-<!--        <tr th:if="${board.fileAttached == 1}">-->
-<!--            <th>images</th>-->
-<!--            <td th:each="fileName: ${board.storedFileName}">-->
-<!--                <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="">-->
-<!--            </td>-->
-<!--        </tr>-->
+        <!--        <tr th:if="${board.fileAttached == 1}">-->
+        <!--            <th>images</th>-->
+        <!--            <td th:each="fileName: ${board.storedFileName}">-->
+        <!--                <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="">-->
+        <!--            </td>-->
+        <!--        </tr>-->
     </table>
 
-    <div class="buttons">
-        <input type="button" value="목록" onclick="list_req()" id="list-btn" style="display: none">
+    <div id="buttons">
+        <input type="button" value="목록" class="btn btn-dark" onclick="list_req()" id="list-btn">
         <input type="button" value="수정" class="btn btn-dark" onclick="board_update()">
         <input type="button" value="삭제" class="btn btn-danger" onclick="board_delete()">
     </div>
 
     <div id="pass-box" style="display: none">
         <input type="text" name="boardPass" id="board-pass" placeholder="정보확인을 위해 비밀번호를 입력하세요">
-        <input type="button" value="수정" onclick="req_update()" id="update-btn" style="display: none">
-        <input type="button" value="삭제" onclick="req_delete()" id="del-btn" style="display: none">
+        <input type="button" value="수정" onclick="req_update()" id="update-btn" class="btn btn-dark"
+               style="display: none">
+        <input type="button" value="삭제" onclick="req_delete()" id="del-btn" class="btn btn-danger"
+               style="display: none">
+    </div>
+
+    <div id="comment">
+        <input type="text" name="commentWriter" id="comment-writer" placeholder="작성자"><br>
+        <input type="text" name="commentContents" id="comment-contents"
+                  placeholder="댓글을 사용할 때에는 타인을 존중하고 커뮤니티 가이드를 준수하세요.">
+        <input type="button" onclick="comment_write()" class="btn btn-dark" value="댓글작성">
+    </div>
+
+    <div id="comment-box">
+        <table>
+            <tr>
+                <th>ID</th>
+                <td></td>
+            </tr>
+            <tr>
+                <th>작성자</th>
+                <td></td>
+            </tr>
+            <tr>
+                <th>내용</th>
+                <td></td>
+            </tr>
+        </table>
     </div>
 </div>
 <div th:replace="components/footer :: footer"></div>
@@ -75,6 +103,7 @@
     const board_update = () => {
         document.querySelector("#pass-box").style.display = "block";
         document.querySelector("#update-btn").style.display = "block";
+        document.querySelector("#del-btn").style.display = "none";
     }
 
     const req_update = () => {
@@ -84,7 +113,7 @@
 
         if (dbPass == inputPass) {
             console.log(dbPass + ";" + inputPass + "/ success: dbPass == inputPass");
-            location.href = "/board/update/"+id;
+            location.href = "/board/update/" + id;
         } else {
             console.log(dbPass + ";" + inputPass + "/ error: dbPass != inputPass");
             alert("비밀번호가 일치하지 않습니다.");
@@ -94,6 +123,7 @@
     const board_delete = () => {
         document.querySelector("#pass-box").style.display = "block";
         document.querySelector("#del-btn").style.display = "block";
+        document.querySelector("#update-btn").style.display = "none";
     }
 
     const req_delete = () => {
@@ -102,9 +132,9 @@
         const inputPass = document.querySelector('input[name="boardPass"]').value;
 
         if (dbPass == inputPass) {
-            axios ({
+            axios({
                 method: "delete",
-                url: "/board/"+id
+                url: "/board/" + id
             }).then(res => {
                 location.href = "/board/";
             }).catch(err => {
@@ -114,6 +144,43 @@
             alert("비밀번호가 일치하지 않습니다.")
         }
 
+    }
+
+    const comment_write = () => {
+        const writer = document.querySelector("#comment-writer").value;
+        const contents = document.querySelector("#comment-contents").value;
+        const boardId = [[${board.id}]];
+        const commentBox = document.querySelector("#comment-box");
+
+        axios({
+            method: "post",
+            url: "/comment/save",
+            data: {
+                commentWriter: writer,
+                commentContents: contents,
+                boardId: boardId
+            }
+        }).then(res => {
+            console.log("res", res);    // 찍어보기는 이렇게
+            let result = "        <table>\n" +
+                "            <tr>\n" +
+                "                <th>ID</th>\n" +
+                "                <td>" + res.data.id + "</td>\n" +
+                "            </tr>\n" +
+                "            <tr>\n" +
+                "                <th>작성자</th>\n" +
+                "                <td>" + res.data.commentWriter + "</td>\n" +
+                "            </tr>\n" +
+                "            <tr>\n" +
+                "                <th>내용</th>\n" +
+                "                <td>" + res.data.commentContents + "</td>\n" +
+                "            </tr>\n" +
+                "        </table>\n"
+            commentBox.innerHTML = result;
+        }).catch(err => {
+            console.log("err", err);  // 이렇게
+            alert("댓글 작성 중 오류가 발생했습니다.");
+        });
     }
 </script>
 </html>

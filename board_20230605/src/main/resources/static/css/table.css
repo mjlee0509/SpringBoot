@@ -24,8 +24,6 @@
     background-color: #f4eeff;
 }
 
-
-
 #info-table {
     margin: auto auto 30px;
     width: 50%;
@@ -41,6 +39,7 @@
 }
 
 #info-table td {
+    background-color: #eeeeee;
     width: 80%;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -64,3 +63,35 @@
     padding-bottom: 5px;
     min-height: 200px;
 }
+
+#buttons {
+    margin: 30px auto;
+    width: 50%;
+}
+
+#pass-box {
+    border: 1px dashed mediumpurple;
+    border-radius: 5px;
+    margin: 30px auto;
+    padding: 10px;
+    width: 50%;
+}
+
+#pass-box input[type=text] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 3px solid black;
+}
+
+#pass-box input[type=text]:focus {
+    background-color: #f4eeff;
+    outline: none;
+    border-bottom: 3px solid #7300ff;
+    font-weight: bold;
+
+}
+

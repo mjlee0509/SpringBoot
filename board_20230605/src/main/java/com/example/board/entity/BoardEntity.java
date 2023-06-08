@@ -1,6 +1,7 @@
 package com.example.board.entity;
 
 import com.example.board.dto.BoardDTO;
+import com.example.board.dto.CommentDTO;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -13,7 +14,7 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "board_table")
-public class BoardEntity {
+public class BoardEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,9 +35,9 @@ public class BoardEntity {
     @Column
     private int boardHits;
 
-    @CreationTimestamp  // 어떠한 entity가 insert될 때 동작됨
-    @Column(updatable = false)  // 수정할 때 작성시간이 업데이트되지 않게 해주는 Annotation
-    private LocalDateTime createdAt;
+//    @CreationTimestamp  // 어떠한 entity가 insert될 때 동작됨
+//    @Column(updatable = false)  // 수정할 때 작성시간이 업데이트되지 않게 해주는 Annotation
+//    private LocalDateTime createdAt;
 
     @Column
     private int fileAttached;
@@ -44,6 +45,9 @@ public class BoardEntity {
     // fk 지정은 어떻게 하는걸까?
     @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<BoardFileEntity> boardFileEntityList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CommentEntity>  commentEntityList = new ArrayList<>();
 
     public static BoardEntity toSaveEntity(BoardDTO boardDTO) {
         BoardEntity boardEntity = new BoardEntity();
@@ -77,5 +81,12 @@ public class BoardEntity {
         boardEntity.setBoardHits(0);
         boardEntity.setFileAttached(1); // <-- toSaveEntity에서 여기만 바꿔주면 된다
         return boardEntity;
+    }
+
+    public static CommentEntity toSaveCommentEntity(CommentDTO commentDTO) {
+        CommentEntity commentEntity = new CommentEntity();
+        commentEntity.setCommentWriter(commentDTO.getCommentWriter());
+        commentEntity.setCommentContents(commentDTO.getCommentContents());
+        return commentEntity;
     }
 }

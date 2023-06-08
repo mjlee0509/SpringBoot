@@ -32,4 +32,6 @@ public class BoardFileEntity {
         boardFileEntity.setStoredFileName(storedFileName);
         return boardFileEntity;
     }
+
+
 }
