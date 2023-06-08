@@ -24,8 +24,7 @@ public class BoardDTO {
 
     private List<MultipartFile> boardFile;
     private int fileAttached;
-
-    private LocalDateTime createdAt;
+    private String createdAt;  // 1. String으로 바꾼다
     private List<String> originalFileName;
     private List<String> storedFileName;
 
@@ -38,7 +37,7 @@ public class BoardDTO {
         boardDTO.setBoardPass(boardEntity.getBoardPass());
         boardDTO.setBoardContents(boardEntity.getBoardContents());
         boardDTO.setBoardHits(boardEntity.getBoardHits());
-        boardDTO.setCreatedAt(boardEntity.getCreatedAt());
+        boardDTO.setCreatedAt(String.valueOf(boardEntity.getCreatedAt()));
 
         // 파일 여부에 따른 코드 추가
         if (boardEntity.getFileAttached() == 1) {

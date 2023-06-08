@@ -29,7 +29,7 @@
         </tr>
         <tr>
             <th>작성일시</th>
-            <td th:text="*{#temporals.format(board.createdAt, 'yyyy년 MM월 dd일 HH:mm')}"></td>
+            <td th:text="${board.createdAt}"></td>
         </tr>
     </table>
 
@@ -71,25 +71,29 @@
     <div id="comment">
         <input type="text" name="commentWriter" id="comment-writer" placeholder="작성자"><br>
         <input type="text" name="commentContents" id="comment-contents"
-                  placeholder="댓글을 사용할 때에는 타인을 존중하고 커뮤니티 가이드를 준수하세요.">
+               placeholder="댓글을 사용할 때에는 타인을 존중하고 커뮤니티 가이드를 준수하세요.">
         <input type="button" onclick="comment_write()" class="btn btn-dark" value="댓글작성">
     </div>
-
     <div id="comment-box">
-        <table>
-            <tr>
-                <th>ID</th>
-                <td></td>
-            </tr>
-            <tr>
-                <th>작성자</th>
-                <td></td>
-            </tr>
-            <tr>
-                <th>내용</th>
-                <td></td>
-            </tr>
-        </table>
+        <div th:if="${commentList == null}">
+            <h3>작성된 댓글이 없습니다</h3>
+        </div>
+        <div th:unless="${commentList == null}">
+            <table>
+                <tr>
+                    <th>id</th>
+                    <th>작성자</th>
+                    <th>내용</th>
+                    <th>작성일시</th>
+                </tr>
+                <tr th:each="comment: ${commentList}">
+                    <td th:text="${comment.id}"></td>
+                    <td th:text="${comment.commentWriter}"></td>
+                    <td th:text="${comment.commentContents}"></td>
+                    <td th:text="${comment.createdAt}"></td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>
 <div th:replace="components/footer :: footer"></div>
@@ -146,6 +150,29 @@
 
     }
 
+    const comment_list = (commentList) => {
+        console.log("댓글목록 함수", commentList);
+        const resultArea = document.querySelector("#comment-box");
+        let output = "        <table>\n" +
+            "            <tr>\n" +
+            "                <th>id</th>\n" +
+            "                <th>작성자</th>\n" +
+            "                <th>내용</th>\n" +
+            "                <th>작성일시</th>\n" +
+            "            </tr>\n"
+        for (let i in commentList) {
+            output += "            <tr>\n" +
+                "                <td>" + commentList[i].id + "</td>\n" +
+                "                <td>" + commentList[i].commentWriter + "</td>\n" +
+                "                <td>" + commentList[i].commentContents + "</td>\n" +
+                "                <td>" + commentList[i].createdAt + "</td>\n" +
+                "            </tr>\n"
+        }
+        output += "</table>";
+        resultArea.innerHTML = output;
+    }
+
+
     const comment_write = () => {
         const writer = document.querySelector("#comment-writer").value;
         const contents = document.querySelector("#comment-contents").value;
@@ -162,25 +189,14 @@
             }
         }).then(res => {
             console.log("res", res);    // 찍어보기는 이렇게
-            let result = "        <table>\n" +
-                "            <tr>\n" +
-                "                <th>ID</th>\n" +
-                "                <td>" + res.data.id + "</td>\n" +
-                "            </tr>\n" +
-                "            <tr>\n" +
-                "                <th>작성자</th>\n" +
-                "                <td>" + res.data.commentWriter + "</td>\n" +
-                "            </tr>\n" +
-                "            <tr>\n" +
-                "                <th>내용</th>\n" +
-                "                <td>" + res.data.commentContents + "</td>\n" +
-                "            </tr>\n" +
-                "        </table>\n"
-            commentBox.innerHTML = result;
+            comment_list(res.data);
+            document.querySelector("#comment-writer").value = "";
+            document.querySelector("#comment-contents").value = "";
         }).catch(err => {
             console.log("err", err);  // 이렇게
             alert("댓글 작성 중 오류가 발생했습니다.");
         });
     }
+
 </script>
 </html>

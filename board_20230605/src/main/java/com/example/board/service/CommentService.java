@@ -44,7 +44,7 @@ public class CommentService {
 //        List<CommentEntity> commentEntityList = BoardEntity.getCommentEntityList();
         // 방법 2. CommentRepository에서 댓글 목록 가져오기
         BoardEntity boardEntity = boardRepository.findById(boardId).orElseThrow(() -> new NoSuchElementException());
-        List<CommentEntity> commentEntityList = commentRepository.findByBoardEntity(boardEntity);
+        List<CommentEntity> commentEntityList = commentRepository.findByBoardEntityOrderByIdDesc(boardEntity);
         List<CommentDTO> commentDTOList = new ArrayList<>();
         commentEntityList.forEach(comment -> {
             commentDTOList.add(CommentDTO.toDTO(comment));
