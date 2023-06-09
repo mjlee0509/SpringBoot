@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <script th:src="@{/js/axios.min.js}"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
 </head>
 <body>
@@ -17,7 +21,14 @@
         <li>
             <a href="/board/">게시판 둘러보기</a>
         </li>
+        <li class="menu">
+            <a th:href="@{/board(page=1)}">엄마, 내가 페이징 처리를 해냈어요!</a>
+        </li>
+
     </ul>
+    <div class="menu search">
+
+    </div>
 </div>
 
 </body>

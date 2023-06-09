@@ -113,7 +113,7 @@ public class BoardTest {
     @DisplayName("(많은) 테스트 데이터 생성")
     @Rollback(value = false)
     public void saveList() {
-        IntStream.rangeClosed(1, 50).forEach(i -> {
+        IntStream.rangeClosed(1, 300).forEach(i -> {
             boardRepository.save(BoardEntity.toSaveEntity(newBoards(i)));
         });
     }
@@ -123,7 +123,7 @@ public class BoardTest {
     @DisplayName("페이징 메서드 객체 확인")
     public void pagingMethod() {
         int page = 0; // 요청한 페이지 번호
-        int pageLimit = 3; // 한 페이지당 보여줄 글 개수
+        int pageLimit = 10; // 한 페이지당 보여줄 글 개수
         Page<BoardEntity> boardEntities = boardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
         // Page 객체가 제공해주는 메서드 확인
         System.out.println("boardEntities.getContent() = " + boardEntities.getContent()); // 요청페이지에 들어있는 데이터
