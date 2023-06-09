@@ -47,9 +47,11 @@ public class BoardController {
     }
 
     @GetMapping // <-- 여기
-    public String paging(@PageableDefault(page = 1) Pageable pageable, Model model) { // <-- 여기
+    public String paging(@PageableDefault(page = 1) Pageable pageable, Model model,
+                         @RequestParam(value = "type", required = false, defaultValue = " ") String type,
+                         @RequestParam(value = "q", required = false, defaultValue = " ") String q) { // <-- 여기
         System.out.println("page = " + pageable.getPageNumber());
-        Page<BoardDTO> boardDTOS = boardService.paging(pageable);
+        Page<BoardDTO> boardDTOS = boardService.paging(pageable, type, q);
         model.addAttribute("boardList", boardDTOS);
         // 시작페이지, 마지막페이지 값 계산
         // 하단에 보여줄 페이지 갯수 = 3으로 가보자고
@@ -65,15 +67,21 @@ public class BoardController {
 //        }
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
+        model.addAttribute("type", type);
+        model.addAttribute("q", q);
         return "boardPages/boardPaging";
     }
 
     @GetMapping("/{id}")
     public String findById(@PathVariable Long id, Model model,
-                           @RequestParam("page") int page) {
+                           @RequestParam("page") int page,
+                           @RequestParam("type") String type,
+                           @RequestParam("q") String q) {
         boardService.updateHits(id);  // 항상 boardDetail 구현할 때에는 조회수 처리부터 하자
         BoardDTO boardDTO = null;
         model.addAttribute("page", page);
+        model.addAttribute("type", type);
+        model.addAttribute("q", q);
         try {
             boardDTO = boardService.findById(id);
             model.addAttribute("board", boardDTO);

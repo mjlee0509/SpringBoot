@@ -22,15 +22,25 @@
             <a href="/board/">게시판 둘러보기</a>
         </li>
         <li class="menu">
-            <a th:href="@{/board(page=1)}">엄마, 내가 페이징 처리를 해냈어요!</a>
+            <a th:href="@{/board(page=1)}">Page</a>
         </li>
-
+        <div class="menu search">
+            <select id="type">
+                <option value="writer">작성자</option>
+                <option value="title">제목</option>
+            </select>
+            <input type="text" placeholder="검색어 입력" id="q" style="display: inline-block">
+            <button onclick="search_fx()">검색</button>
+        </div>
     </ul>
-    <div class="menu search">
-
-    </div>
+    <script>
+        const search_fx = () => {
+            const type = document.querySelector('#type').value;
+            const q = document.querySelector('#q').value;
+            location.href = "/board?type="+type+"&q="+q;
+        }
+    </script>
 </div>
-
 </body>
 <script th:inline="javascript">
     const loginArea = document.getElementById("login-area");
@@ -41,6 +51,7 @@
     } else {
         loginArea.innerHTML = "<a href='/login'>login</a>";
     }
+
 
 </script>
 </html>

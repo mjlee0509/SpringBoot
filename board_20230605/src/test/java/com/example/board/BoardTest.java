@@ -157,6 +157,7 @@ public class BoardTest {
     }
 
     @Test
+    @Transactional
     @DisplayName("제목으로 검색")
     public void searchTestTitle() {
         List<BoardEntity> boardEntityList = boardRepository.findByBoardTitleContaining("2");
@@ -165,6 +166,7 @@ public class BoardTest {
         });
     }
     @Test
+    @Transactional
     @DisplayName("작성자로 검색")
     public void searchTestWriter() {
         List<BoardEntity> boardEntityList = boardRepository.findByBoardWriterContaining("테");
@@ -174,6 +176,7 @@ public class BoardTest {
     }
 
     @Test
+    @Transactional
     @DisplayName("제목으로 검색 내림차순")
     public void searchTestTitleDesc() {
         List<BoardEntity> boardEntityList = boardRepository.findByBoardTitleContainingOrderByIdDesc("2");
@@ -183,6 +186,7 @@ public class BoardTest {
     }
 
     @Test
+    @Transactional
     @DisplayName("제목으로 검색 내림차순")
     public void searchTestTitleOrWriterDesc() {
         String q = "30"; // 검색어는 하나지만
