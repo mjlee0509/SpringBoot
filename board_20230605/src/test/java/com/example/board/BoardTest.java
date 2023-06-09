@@ -154,8 +154,76 @@ public class BoardTest {
         System.out.println("boardEntities.hasPrevious() = " + boardList.hasPrevious()); // 이전페이지 존재 여부
         System.out.println("boardEntities.isFirst() = " + boardList.isFirst()); // 첫페이지인지 여부
         System.out.println("boardEntities.isLast() = " + boardList.isLast()); // 마지막페이지인지 여부
+    }
+
+    @Test
+    @DisplayName("제목으로 검색")
+    public void searchTestTitle() {
+        List<BoardEntity> boardEntityList = boardRepository.findByBoardTitleContaining("2");
+        boardEntityList.forEach(boardEntity -> {
+            System.out.println(BoardDTO.toDTO(boardEntity));
+        });
+    }
+    @Test
+    @DisplayName("작성자로 검색")
+    public void searchTestWriter() {
+        List<BoardEntity> boardEntityList = boardRepository.findByBoardWriterContaining("테");
+        boardEntityList.forEach(boardEntity -> {
+            System.out.println(BoardDTO.toDTO(boardEntity));
+        });
+    }
+
+    @Test
+    @DisplayName("제목으로 검색 내림차순")
+    public void searchTestTitleDesc() {
+        List<BoardEntity> boardEntityList = boardRepository.findByBoardTitleContainingOrderByIdDesc("2");
+        boardEntityList.forEach(boardEntity -> {
+            System.out.println(BoardDTO.toDTO(boardEntity));
+        });
+    }
+
+    @Test
+    @DisplayName("제목으로 검색 내림차순")
+    public void searchTestTitleOrWriterDesc() {
+        String q = "30"; // 검색어는 하나지만
+        List<BoardEntity> boardEntityList = boardRepository.findByBoardTitleContainingOrBoardWriterContainingOrderByIdDesc(q, q); // 검색조건은 2개이다
+        boardEntityList.forEach(boardEntity -> {
+            System.out.println(BoardDTO.toDTO(boardEntity));
+        });
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("검색 결과 페이징")
+    public void SearchPaging() {
+        String q = "2";
+        int page = 0;
+        int pageLimit = 10;
+        Page<BoardEntity> boardEntities = boardRepository.findByBoardWriterContaining(q, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+        Page<BoardDTO> boardList = boardEntities.map(boardEntity ->
+                BoardDTO.builder()
+                        // 목록에서 보여줄 것들만 담아가자
+                        .id(boardEntity.getId())
+                        .boardTitle(boardEntity.getBoardTitle())
+                        .boardWriter(boardEntity.getBoardWriter())
+                        .createdAt(UtlClass.dataFormat(boardEntity.getCreatedAt()))
+                        .boardHits(boardEntity.getBoardHits())
+                        .build()
+        );
+        System.out.println("boardEntities.getContent() = " + boardList.getContent()); // 요청페이지에 들어있는 데이터
+        System.out.println("boardEntities.getTotalElements() = " + boardList.getTotalElements()); // 전체 글갯수
+        System.out.println("boardEntities.getNumber() = " + boardList.getNumber()); // 요청페이지(jpa 기준)
+        System.out.println("boardEntities.getTotalPages() = " + boardList.getTotalPages()); // 전체 페이지 갯수
+        System.out.println("boardEntities.getSize() = " + boardList.getSize()); // 한페이지에 보여지는 글갯수
+        System.out.println("boardEntities.hasPrevious() = " + boardList.hasPrevious()); // 이전페이지 존재 여부
+        System.out.println("boardEntities.isFirst() = " + boardList.isFirst()); // 첫페이지인지 여부
+        System.out.println("boardEntities.isLast() = " + boardList.isLast()); // 마지막페이지인지 여부
 
     }
+
+
+
+
 
 
 }
