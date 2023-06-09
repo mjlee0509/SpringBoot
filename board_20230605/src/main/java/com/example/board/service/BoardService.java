@@ -101,14 +101,14 @@ public class BoardService {
 
     public Page<BoardDTO> paging(Pageable pageable, String type, String q) {
         int page = pageable.getPageNumber() - 1;    // <--
-        int pageLimit = 5;
+        int pageLimit = 10;
         Page<BoardEntity> boardEntities = null;
         if (type.equals("title")) {
             boardEntities = boardRepository.findByBoardTitleContaining(q, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
         } else if (type.equals("writer")) {
             boardEntities = boardRepository.findByBoardWriterContaining(q, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC,"id")));
         } else {
-            boardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+            boardEntities = boardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id"))); // <--  여기 좌변을 안썼었네ㅋㅋ
         }
         Page<BoardDTO> boardDTOS =
                 boardEntities.map(boardEntity -> BoardDTO.builder()

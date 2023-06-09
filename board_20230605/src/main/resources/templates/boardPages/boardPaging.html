@@ -50,8 +50,7 @@
         <li th:class="${boardList.first} ? 'disabled'" class="page-item"> <!-- 조건에 따라 이 링크를 disabled처리 -->
           <!--boardList.first: isFirst()
               boardList.number: getNumber()-->
-          <a class="page-link" th:href="${boardList.first} ? '#' : @{/board(page=${boardList.number}, type=${type}, q=${q})}"> <!-- 조건? 만족 : 불만족 -->
-            <!-- 사용자 3페이지, number 2 /board?page=2 -->
+          <a class="page-link" th:href="${boardList.first} ? '#' : @{/board(page=${boardList.number}, type=${type}, q=${q})}">            <!-- 사용자 3페이지, number 2 /board?page=2 -->
             <span><</span> <!-- < -->
           </a>
         </li>

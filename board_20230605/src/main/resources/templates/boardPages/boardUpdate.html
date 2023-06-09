@@ -5,13 +5,14 @@
     <title>글수정</title>
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <link rel="stylesheet" th:href="@{/css/form.css}">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> <!-- axios 안가져옴-->
 </head>
 <body>
 <div th:replace="components/header :: header"></div>
 <div th:replace="components/nav :: nav"></div>
 <div id="section">
     <form action="/board/update" method="post" id="save-form">
-        <input type="hidden" name="boardId" id="board-id" th:value="${board.id}"><br>
+        <input type="hidden" name="id" id="id" th:value="${board.id}"><br>    <!-- id 이름 잘못돼있었음 -->
         <input type="text" name="boardTitle" id="board-title" placeholder="제목" th:value="${board.boardTitle}"><br>
         <input type="text" name="boardWriter" id="board-writer" placeholder="작성자" th:value="${board.boardWriter}" readonly><br>
         <input type="hidden" name="boardPass" id="board-pass" placeholder="비밀번호" th:value="${board.boardPass}" readonly><br>
