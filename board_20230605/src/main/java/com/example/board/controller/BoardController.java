@@ -69,9 +69,11 @@ public class BoardController {
     }
 
     @GetMapping("/{id}")
-    public String findById(@PathVariable Long id, Model model) {
+    public String findById(@PathVariable Long id, Model model,
+                           @RequestParam("page") int page) {
         boardService.updateHits(id);  // 항상 boardDetail 구현할 때에는 조회수 처리부터 하자
         BoardDTO boardDTO = null;
+        model.addAttribute("page", page);
         try {
             boardDTO = boardService.findById(id);
             model.addAttribute("board", boardDTO);
@@ -106,12 +108,6 @@ public class BoardController {
         boardService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
-
-
-
-
 
 
 }

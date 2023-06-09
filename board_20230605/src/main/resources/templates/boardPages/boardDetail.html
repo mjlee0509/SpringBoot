@@ -102,7 +102,8 @@
 <script>
 
     const list_req = () => {
-        location.href = "/board/";
+        const page = [[${page}]];
+        location.href = "/board?page=" + page;
     }
     const board_update = () => {
         document.querySelector("#pass-box").style.display = "block";
