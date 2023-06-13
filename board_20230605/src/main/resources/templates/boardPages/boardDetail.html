@@ -102,9 +102,9 @@
 <script>
 
     const list_req = () => {
-        const page = [[${page}]];
-        const type = [[${type}]];
-        const q = [[${q}]];
+        const page = '[[${page}]]';
+        const type = '[[${type}]]';
+        const q = '[[${q}]]';
         location.href = "/board?page=" + page + "&type=" + type + "&q=" + q;
     }
     const board_update = () => {

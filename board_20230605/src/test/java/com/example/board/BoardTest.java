@@ -61,7 +61,7 @@ public class BoardTest {
 //        for (int i=1; i<=30; i++) {
 //            boardService.save(newBoards(i));
 //        }
-//    }
+//    }aaaa
 
 //    @Test
 //    public void testDatum() {

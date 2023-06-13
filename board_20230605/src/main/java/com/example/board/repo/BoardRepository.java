@@ -32,12 +32,12 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
     // 제목으로 검색
     // select * from board_table where board_title like '%q%';
     List<BoardEntity> findByBoardTitleContaining(String q); // Param q = boardTitle
-    // 결과를 페이징
+    // 제목으로 검색한 결과를 페이징
     Page<BoardEntity> findByBoardTitleContaining(String q, Pageable pageable); // Param q = boardTitle
 
     // 작성자로 검색
     List<BoardEntity> findByBoardWriterContaining(String q);
-    // 결과를 페이징
+    // 작성자로 검색한 결과를 페이징
     Page<BoardEntity> findByBoardWriterContaining(String q, Pageable pageable);
 
     // 제목 검색 결과를 id 내림차순 정렬
