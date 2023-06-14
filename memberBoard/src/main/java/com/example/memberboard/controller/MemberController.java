@@ -67,9 +67,11 @@ public class MemberController {
     }
 
     @GetMapping("/main")
-    public String memberMain() {
+    public String mypage(@ModelAttribute MemberDTO memberDTO, HttpSession session, Model model) {
         return "membeRPages/memberMain";
     }
+
+
 
 
 

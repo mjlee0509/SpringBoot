@@ -16,10 +16,20 @@
         <li>
             <a href="/member/save"> 회원가입 </a>
         </li>
+        <li id="login-area">
+
+        </li>
     </ul>
+    <script th:inline="javascript">
+        const loginArea = document.getElementById("login-area");
+        const loginEmail = [[${session.loginEmail}]];
 
-
-
+        if (loginEmail.length != '') {
+            loginArea.innerHTML = "<a href='/mypage' style='color: black'>"+loginEmail+" 님 환영합니다🖕";
+        } else {
+            loginArea.style.display = "none";
+        }
+    </script>
 </div>
 </body>
 </html>

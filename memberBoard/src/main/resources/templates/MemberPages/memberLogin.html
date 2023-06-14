@@ -22,6 +22,7 @@
         const email = document.querySelector('input[name="memberEmail"]').value;
         const password = document.querySelector('input[name="memberPassword"]').value;
         const redirectURI = document.querySelector('input[name="redirectURI"]').value;
+        const loginEmail = [[${session.loginEmail}]]
         console.log("redirectURI => ", redirectURI);
         axios({
             method: "post",
@@ -31,7 +32,7 @@
                 memberPassword: password
             }
         }).then(res => {
-            console.log(email, password + " => OK")
+            console.log(email, password + " => OK; ", loginEmail)
             location.href = redirectURI;
         }).catch(err => {
             console.log(email, password + " => Not Found")
