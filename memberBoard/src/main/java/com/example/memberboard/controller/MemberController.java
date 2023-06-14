@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.lang.reflect.Member;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -49,10 +51,11 @@ public class MemberController {
 
     @PostMapping("/login")
     public String login (@ModelAttribute MemberDTO memberDTO, HttpSession session,
-                         @RequestParam("redirectURI") String redirectURI) {
+                         @RequestParam("redirectURI") String redirectURI, Model model) {
         boolean loginResult = memberService.login(memberDTO);
         if (loginResult) {
             session.setAttribute("loginEmail", memberDTO.getMemberEmail());
+            model.addAttribute("member", memberDTO);
             return "redirect:"+redirectURI;
         } else {
             return "memberPages/memberLogin";
@@ -60,16 +63,31 @@ public class MemberController {
     }
 
     @PostMapping("/login/axios")
-    public ResponseEntity memberLogin(@RequestBody MemberDTO memberDTO, HttpSession session) throws Exception {
+    public ResponseEntity memberLogin(@RequestBody MemberDTO memberDTO, HttpSession session, Model model) throws Exception {
         memberService.loginAxios(memberDTO);
         session.setAttribute("loginEmail", memberDTO.getMemberEmail());
+        model.addAttribute("member", memberDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/main")
-    public String mypage(@ModelAttribute MemberDTO memberDTO, HttpSession session, Model model) {
+    public String main(@ModelAttribute MemberDTO memberDTO, HttpSession session, Model model) {
         return "membeRPages/memberMain";
     }
+
+    @GetMapping("/")
+    public String findAll(Model model) {
+        List<MemberDTO> memberDTOList = memberService.findAll();
+        model.addAttribute("memberList", memberDTOList);
+        return "memberPages/memberList";
+    }
+
+    @GetMapping("/axios/{id}")
+    public ResponseEntity detailAxios(@PathVariable Long id) throws Exception{
+        MemberDTO memberDTO = memberService.findById(id);
+        return new ResponseEntity<>(memberDTO, HttpStatus.OK);
+    }
+
 
 
 

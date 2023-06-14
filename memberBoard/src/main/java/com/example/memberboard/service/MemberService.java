@@ -8,10 +8,12 @@ import com.example.memberboard.repo.MemberProfileRepository;
 import com.example.memberboard.repo.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.swing.text.html.Option;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -58,15 +60,6 @@ public class MemberService {
 
     }
 
-    public List<MemberDTO> findAll() {
-        List<MemberEntity> memberEntityList = memberRepository.findAll();
-        List<MemberDTO> memberDTOList = new ArrayList<>();
-        for (MemberEntity memberEntity: memberEntityList) {
-            memberDTOList.add(MemberDTO.toDTO(memberEntity));
-        }
-        return memberDTOList;
-    }
-
     public boolean login(MemberDTO memberDTO) {
         Optional<MemberEntity> memberEntity = memberRepository.findByMemberEmailAndMemberPassword(memberDTO.getMemberEmail(), memberDTO.getMemberPassword());
         if (memberEntity.isPresent()) {
@@ -80,6 +73,23 @@ public class MemberService {
 
         memberRepository.findByMemberEmailAndMemberPassword(memberDTO.getMemberEmail(), memberDTO.getMemberPassword())
                 .orElseThrow(() -> new NoSuchElementException("이메일 또는 비밀번호가 일치하지 않습니다"));
+    }
+
+    @Transactional
+    public List<MemberDTO> findAll() {
+        List<MemberEntity> memberEntityList = memberRepository.findAll();
+        List<MemberDTO> memberDTOList = new ArrayList<>();
+        for (MemberEntity memberEntity: memberEntityList) {
+            memberDTOList.add(MemberDTO.toDTO(memberEntity));
+        }
+        return memberDTOList;
+    }
+
+
+    @Transactional
+    public MemberDTO findById(Long id) {
+        MemberEntity memberEntity = memberRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+        return MemberDTO.toDTO(memberEntity);
     }
 }
 

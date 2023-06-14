@@ -10,10 +10,10 @@
         <li class="left">
             <a href="/"> MEMBER&BOARD PROJECT </a>
         </li>
-        <li>
+        <li id="login-logout">
             <a href="/member/login"> 로그인 </a>
         </li>
-        <li>
+        <li id="member-info">
             <a href="/member/save"> 회원가입 </a>
         </li>
         <li id="login-area">
@@ -22,12 +22,18 @@
     </ul>
     <script th:inline="javascript">
         const loginArea = document.getElementById("login-area");
+        const memberInfo = document.getElementById("member-info");
+        const loginLogout = document.getElementById("login-logout");
         const loginEmail = [[${session.loginEmail}]];
 
-        if (loginEmail.length != '') {
-            loginArea.innerHTML = "<a href='/mypage' style='color: black'>"+loginEmail+" 님 환영합니다🖕";
+        if (loginEmail.length !== null) {
+            loginArea.innerHTML = "<a href='/member/main/' style='color: black'>"+loginEmail+" 님 환영합니다";
+            memberInfo.innerHTML = "<a href='/member/' style='color: black'>"+"회원목록";
+            loginLogout.innerHTML = "<a href='/' style='color: black'>"+"로그아웃";
         } else {
             loginArea.style.display = "none";
+            memberInfo.innerHTML = "<a href='/member/login' style='color: black'>"+"회원가입";
+            loginLogout.innerHTML = "<a href='/member/save' style='color: black'>"+"로그인";
         }
     </script>
 </div>
