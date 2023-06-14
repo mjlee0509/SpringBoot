@@ -10,7 +10,13 @@
 <div th:replace="components/header :: header"></div>
 <div>
 <h2>헬로 월드</h2>
+    <button onclick="update()">내 정보 수정</button>
 </div>
 <div th:replace="components/footer :: footer"></div>
 </body>
+<script>
+    const update = () => {
+        location.href = "/member/update";
+    }
+</script>
 </html>

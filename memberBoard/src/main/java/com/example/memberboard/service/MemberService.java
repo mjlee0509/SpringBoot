@@ -95,5 +95,10 @@ public class MemberService {
     public void delete(Long id) {
         memberRepository.deleteById(id);
     }
+
+    public MemberDTO findByMemberEmail(String loginEmail) {
+        MemberEntity memberEntity = memberRepository.findByMemberEmail(loginEmail).orElseThrow(() -> new NoSuchElementException());
+        return MemberDTO.toDTO(memberEntity);
+    }
 }
 
