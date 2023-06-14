@@ -32,13 +32,32 @@ public class memberTest {
         return memberDTO;
     }
 
+    private MemberDTO newMembers(int i) {
+        MemberDTO memberDTO = new MemberDTO();
+        memberDTO.setMemberEmail("member"+i);
+        memberDTO.setMemberPassword("1234");
+        memberDTO.setMemberName(i+"번째 테스트맨");
+        memberDTO.setMemberBirth("1995-01-01");
+        memberDTO.setMemberMobile("010-1111-1111");
+        return memberDTO;
+    }
+
     @Test
     @Transactional
-    @DisplayName("(많은) 테스트 데이터 생성")
+    @DisplayName("테스트 데이터 생성")
     @Rollback(value = false)
     public void testDatum() {
         IntStream.rangeClosed(1, 1).forEach(i -> {
             memberRepository.save(MemberEntity.toSaveEntity(newMember()));
+        });
+    }
+    @Test
+    @Transactional
+    @DisplayName("많은 테스트 데이터 생성")
+    @Rollback(value = false)
+    public void testData() {
+        IntStream.rangeClosed(1, 10).forEach(i -> {
+            memberRepository.save(MemberEntity.toSaveEntity(newMembers(i)));
         });
     }
 
