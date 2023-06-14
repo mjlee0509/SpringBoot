@@ -10,7 +10,10 @@
 <div th:replace="components/header :: header"></div>
 <div id="section">
     <h2>회원가입</h2>
-    <form action="/member/save" method="post">
+    <form action="/member/save" method="post" enctype="multipart/form-data">
+        <h4>프로필사진</h4>
+        <img id="profile-img-box" src="#" alt="" width="100" height="100"><br>
+        <input type="file" name="memberProfile" id="profile-img" multiple onchange="preview()"><br>
         <input type="text" name="memberEmail" id="member-email" placeholder="사용하실 이메일을 입력하세요"
                onblur="email_check()"><br>
         <p id="check-result">
@@ -32,7 +35,7 @@
         생년월일 <input type="date" name="memberBirth" id="member-birth" placeholder="생년월일"><br>
         <input type="text" name="memberMobile" id="member-mobile" placeholder="전화번호(010-0000-0000)"><br>
         <input type="button" value="홈으로" onclick="go_home()">
-        <input type="submit" value="가입하기" onclick="is_valid()">
+        <input type="submit" value="가입하기">
     </form>
 </div>
 <div th:replace="components/footer :: footer"></div>
@@ -40,6 +43,14 @@
 <script>
     const go_home = () => {
         location.href = "/";
+    }
+
+    const preview = () => {
+        const preview = new FileReader();
+        preview.onload = function (e) {
+            document.getElementById("profile-img-box").src = e.target.result;
+        }
+        preview.readAsDataURL(document.getElementById("profile-img").files[0])
     }
 
 
@@ -78,8 +89,8 @@
             console.log(email + " : used")
             document.querySelector("#used").style.display = "block";
         })
-
-
     }
+
+
 </script>
 </html>

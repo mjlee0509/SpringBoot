@@ -28,10 +28,16 @@ public class MemberDTO {
         memberDTO.setMemberName(memberEntity.getMemberName());
         memberDTO.setMemberBirth(memberEntity.getMemberBirth());
         memberDTO.setMemberMobile(memberEntity.getMemberMobile());
+
+        if (memberEntity.getProfileAttached() == 1) {
+            memberDTO.setProfileAttached(1);
+            memberDTO.setOriginalFileName(memberEntity.getMemberProfileEntityList().get(0).getOriginalFileName());
+            memberDTO.setStoredFileName(memberEntity.getMemberProfileEntityList().get(0).getStoredFileName());
+        } else {
+            memberDTO.setProfileAttached(0);
+        }
         return memberDTO;
     }
-
-
 
 
 }
